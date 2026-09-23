@@ -1,26 +1,24 @@
-
 # omiclimma
 
-<!-- badges: start -->
-<!-- badges: end -->
+`omiclimma`, mikrodizi ve RNA-seq sayım verileri için `limma` ve `limma-voom` tabanlı diferansiyel gen ekspresyonu (DGE) analizlerini kolaylaştıran bir R paketidir.
 
-The goal of omiclimma is to ...
+## Kurulum
 
-## Installation
+Paketi GitHub üzerinden yüklemek için:
+## Temel Fonksiyonlar
 
-You can install the development version of omiclimma from [GitHub](https://github.com/) with:
+- **`run_dge()`**: Log-dönüştürülmüş mikrodizi veya normalize ekspresyon verileri için standart limma hattı.
+- **`run_voom_dge()`**: Ham RNA-seq sayım verileri için TMM normalizasyonu ve `limma-voom` analizi.
 
-``` r
-# install.packages("pak")
-pak::pak("efecan4255sys/omiclimma")
-```
+## Hızlı Başlangıç (RNA-seq voom Örneği)
 
-## Example
+# Örnek sayım matrisi ve gruplar
+counts <- matrix(rpois(6000, lambda = 40), nrow = 1000, ncol = 6)
+rownames(counts) <- paste0("Gene_", 1:1000)
+colnames(counts) <- c("Ctrl1", "Ctrl2", "Ctrl3", "Tumor1", "Tumor2", "Tumor3")
 
-This is a basic example which shows you how to solve a common problem:
+gruplar <- c("Control", "Control", "Control", "Tumor", "Tumor", "Tumor")
 
-``` r
-library(omiclimma)
-## basic example code
-```
-
+# Analizi çalıştır
+sonuclar <- run_voom_dge(counts, gruplar)
+head(sonuclar)
